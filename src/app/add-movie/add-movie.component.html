@@ -1,0 +1,26 @@
+<div class="card my-3">
+  <div class="card-header bg-primary text-white">
+    <h2>Add New Movie Details</h2>
+  </div>
+  <div class="card-body">
+    <form class="" #movieForm="ngForm">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input ngModel name="title" type="text" class="form-control" id="title" placeholder="Enter movie title">
+      </div>
+      <div class="form-group">
+        <label for="schedule">Date:</label>
+        <input type="date" id="schedule" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="time">Time</label>
+        <input type="time" id="time" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea rows=5 cols=5 type="text" id="description" class="form-control"></textarea>
+      </div>
+    </form>
+  </div>
+  <h1>{{movieForm}}</h1>
+</div>

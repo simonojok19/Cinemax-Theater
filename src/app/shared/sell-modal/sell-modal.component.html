@@ -1,0 +1,28 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <!-- <h5 class="modal-title" id="sellMovieModalLabel">Sell Ticket</h5> -->
+      <h5>{{currentSeat?.getId()}}</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="clientName">Client Name</label>
+          <input type="email" class="form-control" id="clientName" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="amount">Amount:</label>
+          <input type="text" class="form-control" id="amount" aria-describedby="emailHelp" placeholder="Enter amount ugx">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary" (click)="book()">Save changes</button>
+    </div>
+  </div>
+</div>

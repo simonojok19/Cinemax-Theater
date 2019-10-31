@@ -1,0 +1,95 @@
+<div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{movie.img}}" class="card-img" alt="...">
+      </div>
+      <div class="col-md-6">
+        <div class="card-body">
+          <h5 class="card-title">{{movie.title}}</h5>
+          <p class="card-text">{{ movie.description }}</p>
+          <p class="card-text"><small class="text-muted">{{ movie.date}}, {{ movie.time }}</small></p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <h5 class="p-3 bg-primary text-white bold">SCREEN</h5>
+        <h6>Number of Seats available: {{availableSeats}}</h6>
+        <h6>Total sales: {{getTotalSales()}}</h6>
+        <h6>Total Tick Sold: {{ totalTicketSold}}</h6>
+        <h4 class="countDown p-4 m-1">45:90</h4>
+      </div>
+    </div>
+</div>
+<div class="hall-map">
+  <div class="screen"></div>
+  <div *ngFor="let row of hallArrangment; index as rowCount">
+    <div class="chair text-white pl-0"
+    *ngFor="let seat of row; index as count"
+    [ngClass]="{
+      'bg-success': ((count > 3) && rowCount < 2) && ((count < 15) && rowCount < 2),
+      'bg-secondary': rowCount < 6,
+      'bg-warning': (rowCount < 12) && (rowCount > 5),
+      'bg-danger': !seat.getAvailability()
+    }"
+    >
+      <div (click)="setCurrentSeat(seat)">
+        <div class="just continer" data-toggle="modal" data-target="#sellMovieModal">
+          <h1 class="seat" title="
+            <h6>{{seat.getStatus()}}</h6>
+            <p>Price: {{seat.getPrice()}}<p>
+            "
+            data-html="true"
+            data-toggle="tooltip" data-placement="top" title="Tooltip on top"
+            >{{ seat.rep }}</h1>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- Modal -->
+<div class="modal fade" id="sellMovieModal" tabindex="-1" role="dialog" aria-labelledby="sellMovieModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div *ngIf="currentSeat?.getAvailability()">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="sellMovieModalLabel">
+              Seat Number: {{ currentSeat?.getId() }}<br>
+              Type: {{ currentSeat?.getStatus()}}<br>
+              Price: {{ currentSeat?.getPrice()}}
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="clientName">Client Name</label>
+                <input type="email"
+                class="form-control"
+                id="clientName" aria-describedby="emailHelp" placeholder="Enter email"
+                [disabled]="!currentSeat.getAvailability()">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              </div>
+              <div class="form-group">
+                <label for="amount">Amount:</label>
+                <input type="text"
+                  class="form-control"
+                  id="amount" aria-describedby="emailHelp" placeholder="Enter amount ugx"
+                  [disabled]="!currentSeat.getAvailability()">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" (click)="sellTick()" data-dismiss="modal" [disabled]="!currentSeat.getAvailability()">Sell And Exit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div *ngIf="!currentSeat?.getAvailability()">
+    <script>
+      alert('This seat is no empty');
+    </script>
+</div>
